@@ -1,12 +1,17 @@
 function divElementEnostavniTekst(sporocilo) {
   var jeSmesko = sporocilo.indexOf('http://sandbox.lavbic.net/teaching/OIS/gradivo/') > -1;
+<<<<<<< HEAD
   var jeSlika = sporocilo.indexOf('<img style=\"width:200px; margin-left:20px;\" src=\"') > -1;
+=======
+   var jeVideo = sporocilo.indexOf('<iframe src=\"https://www.youtube.com/embed/')>-1;
+>>>>>>> youtube
   
   if (jeSmesko) {
     sporocilo = sporocilo.replace(/\</g, '&lt;').replace(/\>/g, '&gt;').replace('&lt;img', '<img').replace('png\' /&gt;', 'png\' />');
     return $('<div style="font-weight: bold"></div>').html(sporocilo);
     
     
+<<<<<<< HEAD
     
   } else if (jeSlika){
     
@@ -14,8 +19,18 @@ function divElementEnostavniTekst(sporocilo) {
     return $('<div style="font-weight: bold"></div>').html(sporocilo);
     
   }else{
+=======
+  } else if (jeVideo){
+    
+    sporocilo = sporocilo.replace(/\</g, '&lt;').replace(/\>/g, '&gt;').replace('&lt;iframe','<iframe').replace('allowfullscreen&gt;&lt;/iframe&gt;', 'allowfullscreen></iframe>');
+
+    return $('<div style="font-weight: bold"></div>').html(sporocilo);
+  }else{
+    
+>>>>>>> youtube
     return $('<div style="font-weight: bold;"></div>').text(sporocilo);
   }
+  
 }
 
 function divElementHtmlTekst(sporocilo) {
@@ -25,7 +40,11 @@ function divElementHtmlTekst(sporocilo) {
 function procesirajVnosUporabnika(klepetApp, socket) {
   var sporocilo = $('#poslji-sporocilo').val();
   sporocilo = dodajSmeske(sporocilo);
+<<<<<<< HEAD
   sporocilo = dodajSlike(sporocilo);
+=======
+  sporocilo = dodajVideo(sporocilo);
+>>>>>>> youtube
   var sistemskoSporocilo;
 
   if (sporocilo.charAt(0) == '/') {
@@ -134,6 +153,15 @@ $(document).ready(function() {
   
   
 });
+
+function dodajVideo(bes){
+  var st = bes.indexOf('https://www.youtube.com/watch?v=');
+  if(st > -1){
+    bes = bes.substr(0,st-1) + "<iframe src=\"https://www.youtube.com/embed/" + bes.substr(st+32,bes.length) + "\" allowfullscreen></iframe>";
+  }
+  return bes;
+}
+
 
 function dodajSmeske(vhodnoBesedilo) {
   var preslikovalnaTabela = {
