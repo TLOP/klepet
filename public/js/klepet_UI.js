@@ -54,7 +54,7 @@ function filtirirajVulgarneBesede(vhod) {
 
 $(document).ready(function() {
   var klepetApp = new Klepet(socket);
-
+  
   socket.on('vzdevekSpremembaOdgovor', function(rezultat) {
     var sporocilo;
     if (rezultat.uspesno) {
@@ -99,6 +99,14 @@ $(document).ready(function() {
     for (var i=0; i < uporabniki.length; i++) {
       $('#seznam-uporabnikov').append(divElementEnostavniTekst(uporabniki[i]));
     }
+    
+    //Zasebna sporočila
+    $('#seznam-uporabnikov div').click(function(){
+      
+      $('#poslji-sporocilo').val("/zasebno \"" + $(this).text() + "\" ");
+      $('#poslji-sporocilo').focus();
+    })
+    
   });
 
   setInterval(function() {
